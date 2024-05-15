@@ -1,0 +1,76 @@
+1.How to compare two JSON have the same properties without order .
+
+a)let obj1 = {name:"Person1",age:5};
+b)let obj2 = {age:5,name:"Person1};
+
+function compareJSON(obj1, obj2) {
+  // Convert objects to strings and sort them
+  let str1 = JSON.stringify(obj1, Object.keys(obj1).sort());
+  let str2 = JSON.stringify(obj2, Object.keys(obj2).sort());
+
+  // Compare the sorted strings
+  return str1 === str2;
+}
+
+let objA = {name: "person 1", age: 5};
+let objB = {age: 5, name: "Person 1"};
+
+let areEqual = compareJSON(objA, objB);
+
+console.log(areEqual); // Output: true
+
+
+2.Use the rest countries API URL -> https://restcountries.com/v3.1/all and display all the country flags in the console.
+
+let xhr = new XMLHttpRequest();
+
+xhr.open('GET', 'https://restcountries.com/v3.1/all', true);
+
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 400) {
+    var data = JSON.parse(xhr.responseText);
+
+    data.forEach(function (country) {
+      var flag = country.flags.svg;
+      console.log(flag);
+    });
+  } else {
+    console.error('Error:', xhr.status, xhr.statusText);
+  }
+};
+
+xhr.onerror = function() {
+  console.error('Network error');
+};
+
+xhr.send();
+
+3.Use the same rest countries and print all countries name, regions, sub-region and populations
+
+let xhr = new XMLHttpRequest();
+
+xhr.open('GET', 'https://restcountries.com/v3.1/all', true);
+
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 400) {
+    var data = JSON.parse(xhr.responseText);
+
+    data.forEach(function (country) {
+      var name = country.name.common;
+      var region = country.region;
+      var subRegion = country.subregion;
+      var population = country.population;
+
+      console.log(`Name: ${name}, Region: ${region}, Sub-Region: ${subRegion}, Population: ${population}`);
+    });
+  } else {
+    console.error('Error:', xhr.status, xhr.statusText);
+  }
+};
+
+xhr.onerror = function() {
+  console.error('Network error');
+};
+
+xhr.send();
+
